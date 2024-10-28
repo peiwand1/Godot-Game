@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://bi0xeuxj763ce"]
+
+[ext_resource type="Script" path="res://scripts/Mob.cs" id="1_1co1l"]
+[ext_resource type="Texture2D" uid="uid://uxux76cd4mbr" path="res://textures/ball.png" id="1_p0gff"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_43sio"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_dy68y"]
+
+[node name="Mob" type="RigidBody2D" groups=["mobs"]]
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_1co1l")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_43sio")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_dy68y")
+scale = Vector2(0.157826, 0.157826)
+texture = ExtResource("1_p0gff")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="OnVisibleOnScreenNotifier2DScreenExited"]
