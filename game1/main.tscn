@@ -15,6 +15,14 @@ point_count = 5
 script = ExtResource("1_wynj2")
 MobScene = ExtResource("2_yww7c")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -32.0
+offset_top = -24.0
+offset_right = 8.0
+offset_bottom = 16.0
+scale = Vector2(30.6442, 17.8445)
+color = Color(0.760306, 0.565986, 0.363819, 1)
+
 [node name="Player" parent="." instance=ExtResource("3_u7kbn")]
 position = Vector2(-192, 312)
 
