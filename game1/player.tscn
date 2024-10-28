@@ -8,10 +8,10 @@
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_7qp1e")
+"texture": ExtResource("1_eg6x4")
 }, {
 "duration": 1.0,
-"texture": ExtResource("1_eg6x4")
+"texture": ExtResource("1_7qp1e")
 }],
 "loop": true,
 "name": &"walk",
