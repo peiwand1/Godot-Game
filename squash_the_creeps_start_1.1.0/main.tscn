@@ -1,0 +1,142 @@
+[gd_scene load_steps=12 format=3 uid="uid://byu2xmtq73uv2"]
+
+[ext_resource type="PackedScene" uid="uid://ctu43slavwgj8" path="res://player.tscn" id="1_qcmsa"]
+[ext_resource type="Script" path="res://scripts/Main.cs" id="1_t4v5g"]
+[ext_resource type="PackedScene" uid="uid://obs5ssaibgnj" path="res://mob.tscn" id="2_0tjvd"]
+[ext_resource type="FontFile" uid="uid://dnwk23n81rfcl" path="res://fonts/Montserrat-Medium.ttf" id="4_3kvcs"]
+[ext_resource type="Script" path="res://scripts/ScoreLabel.cs" id="5_rswai"]
+
+[sub_resource type="Theme" id="Theme_y62b0"]
+default_font = ExtResource("4_3kvcs")
+default_font_size = 22
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qhhn5"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1nxh1"]
+albedo_color = Color(0.521569, 0.74902, 0.403922, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8y0fv"]
+material = SubResource("StandardMaterial3D_1nxh1")
+size = Vector3(60, 2, 60)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xxhtw"]
+height = 4.76
+
+[sub_resource type="Curve3D" id="Curve3D_oxdde"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -14.1119, 0, -13.9615, 0, 0, 0, 0, 0, 0, 14.1134, 0, -13.8855, 0, 0, 0, 0, 0, 0, 14.0373, 0, 16.3179, 0, 0, 0, 0, 0, 0, -13.9597, 0, 16.1657, 0, 0, 0, 0, 0, 0, -14.1119, 0, -13.9615),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[node name="Main" type="Node"]
+script = ExtResource("1_t4v5g")
+MobScene = ExtResource("2_0tjvd")
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_y62b0")
+
+[node name="Retry" type="ColorRect" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.376471)
+
+[node name="ScoreLabel2" type="Label" parent="UserInterface/Retry"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -44.0
+offset_top = -14.0
+offset_right = 44.0
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press Enter to retry."
+script = ExtResource("5_rswai")
+
+[node name="ScoreLabel" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 20.0
+offset_right = 90.0
+offset_bottom = 43.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Score: 0"
+script = ExtResource("5_rswai")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+collision_layer = 4
+collision_mask = 0
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_qhhn5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_8y0fv")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 9, 20, 14)
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("1_qcmsa")]
+
+[node name="CameraPivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 19)
+projection = 1
+size = 19.0
+far = 100.0
+
+[node name="Cylinders" type="Node3D" parent="."]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, -14)
+mesh = SubResource("CylinderMesh_xxhtw")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -14)
+mesh = SubResource("CylinderMesh_xxhtw")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 16)
+mesh = SubResource("CylinderMesh_xxhtw")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 16)
+mesh = SubResource("CylinderMesh_xxhtw")
+skeleton = NodePath("../..")
+
+[node name="SpawnPath" type="Path3D" parent="."]
+curve = SubResource("Curve3D_oxdde")
+
+[node name="SpawnLocation" type="PathFollow3D" parent="SpawnPath"]
+transform = Transform3D(-0.00269548, 0, -0.999996, 0, 1, 0, 0.999996, 0, -0.00269548, -14.1119, 0, -13.9615)
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="Hit" from="Player" to="." method="OnPlayerHit"]
+[connection signal="timeout" from="MobTimer" to="." method="OnMobTimerTimeout"]
