@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://2crpqfe6cumg"]
+
+[ext_resource type="Texture2D" uid="uid://dpse7ghin31s1" path="res://Assets/mario.png" id="1_1jp2p"]
+[ext_resource type="Script" path="res://Scripts/Player.cs" id="1_5nyen"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5jtsc"]
+size = Vector2(16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iebms"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_1jp2p")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_5nyen")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_5jtsc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_iebms")
