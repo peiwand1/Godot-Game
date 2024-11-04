@@ -44,7 +44,7 @@ public partial class Player : CharacterBody2D
 
 	int speedThreshold = 0;
 
-	enum State { SMALL, BIG, FIRE }
+	PowerState curState = PowerState.SMALL;
 
 	public override void _Process(double delta)
 	{
@@ -147,7 +147,6 @@ public partial class Player : CharacterBody2D
 		}
 	}
 
-
 	private void processWalk(double delta)
 	{
 		Vector2 vel = Velocity;
@@ -227,4 +226,13 @@ public partial class Player : CharacterBody2D
 		speedScale = Mathf.Abs(Velocity.X) / MAX_SPEED;
 	}
 
+	public void PowerUpTo(PowerState aState)
+	{
+		if (aState > curState)
+		{
+			curState = aState;
+			GD.Print(curState);
+		}
+		// TODO transition sprite
+	}
 }

@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=4 uid="uid://cg8450gad4vjo"]
+[gd_scene load_steps=7 format=4 uid="uid://cg8450gad4vjo"]
 
 [ext_resource type="Texture2D" uid="uid://bbxtd87egok4x" path="res://Assets/NES - Super Mario Bros - Tileset.png" id="1_ares2"]
 [ext_resource type="PackedScene" uid="uid://2crpqfe6cumg" path="res://player.tscn" id="2_igb21"]
 [ext_resource type="PackedScene" uid="uid://cpg4coh1h5pu0" path="res://camera.tscn" id="3_0jm10"]
+[ext_resource type="PackedScene" uid="uid://dchd65dthrnfw" path="res://mushroom.tscn" id="4_i16pp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h45o7"]
 texture = ExtResource("1_ares2")
@@ -631,3 +632,6 @@ tile_set = SubResource("TileSet_544ef")
 position = Vector2(39, -40)
 
 [node name="Camera" parent="Player" instance=ExtResource("3_0jm10")]
+
+[node name="Mushroom" parent="." instance=ExtResource("4_i16pp")]
+position = Vector2(85, -89)
