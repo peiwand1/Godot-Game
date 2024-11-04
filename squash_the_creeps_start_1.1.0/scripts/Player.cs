@@ -3,6 +3,7 @@ using System;
 
 public partial class Player : CharacterBody3D
 {
+	// create a new signal that triggers when the character is hit
 	[Signal]
 	public delegate void HitEventHandler();
 
@@ -32,10 +33,10 @@ public partial class Player : CharacterBody3D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		// We create a local variable to store the input direction.
+		// create a local variable to store the input direction
 		var direction = Vector3.Zero;
 
-		// We check for each move input and update the direction accordingly.
+		// check for each move input and update the direction accordingly
 		if (Input.IsActionPressed("move_right"))
 		{
 			direction.X += 1.0f;
@@ -53,10 +54,11 @@ public partial class Player : CharacterBody3D
 			direction.Z -= 1.0f;
 		}
 
+		// if any direction is pressed
 		if (direction != Vector3.Zero)
 		{
-			direction = direction.Normalized();
-			// Setting the basis property will affect the rotation of the node.
+			direction = direction.Normalized(); // normalize vector
+			// setting the basis property will affect the rotation of the node.
 			GetNode<Node3D>("Pivot").Basis = Basis.LookingAt(direction);
 			GetNode<AnimationPlayer>("AnimationPlayer").SpeedScale = 4;
 		}
@@ -65,12 +67,12 @@ public partial class Player : CharacterBody3D
 			GetNode<AnimationPlayer>("AnimationPlayer").SpeedScale = 1;
 		}
 
-		// Ground velocity
+		// ground velocity
 		_targetVelocity.X = direction.X * Speed;
 		_targetVelocity.Z = direction.Z * Speed;
 
-		// Vertical velocity
-		if (!IsOnFloor()) // If in the air, fall towards the floor. Literally gravity
+		// vertical velocity
+		if (!IsOnFloor()) // if in the air, fall towards the floor
 		{
 			_targetVelocity.Y -= FallAcceleration * (float)delta;
 		}
@@ -82,21 +84,21 @@ public partial class Player : CharacterBody3D
 
 		for (int index = 0; index < GetSlideCollisionCount(); index++)
 		{
-			// We get one of the collisions with the player.
+			// get first collision with the player
 			KinematicCollision3D collision = GetSlideCollision(index);
 
-			// If the collision is with a mob and collision is from above.
+			// if the collision is with a mob and collision is from above
 			if (collision.GetCollider() is Mob mob && Vector3.Up.Dot(collision.GetNormal()) > 0.1f)
 			{
-				// If so, we squash it and bounce.
+				// if so, we squash it and bounce
 				mob.Squash();
 				_targetVelocity.Y = BounceImpulse;
-				// Prevent further duplicate calls.
+				// prevent further duplicate calls
 				break;
 			}
 		}
 
-		// Moving the character
+		// moving the character
 		var pivot = GetNode<Node3D>("Pivot");
 		pivot.Rotation = new Vector3(Mathf.Pi / 6.0f * Velocity.Y / JumpImpulse, pivot.Rotation.Y, pivot.Rotation.Z);
 		Velocity = _targetVelocity;
