@@ -279,6 +279,7 @@ public partial class Player : CharacterBody2D
 			
 		if (hasPoweredUp)
 		{
+			// TODO Animation gets skipped because it gets overwritten after 1 frame, find fix
 			setAnimation("power_up");
 			hasPoweredUp = false;
 		}
