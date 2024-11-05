@@ -37,6 +37,8 @@ public partial class Player : CharacterBody2D
 	bool isFalling = false;
 	bool isCrouching = false;
 	bool isSkidding = false;
+	bool hitboxNeedsUpdate = false;
+	bool hasPoweredUp = false;
 
 	float minSpeed = MIN_SPEED;
 	float maxSpeed = MAX_WALK_SPEED;
@@ -46,21 +48,44 @@ public partial class Player : CharacterBody2D
 
 	PowerState curState = PowerState.SMALL;
 
+	private AnimatedSprite2D _animatedSprite;
+	private CollisionShape2D _collisionShape;
+	private RectangleShape2D _rectangleShape;
+	public override void _Ready()
+	{
+		_animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		_collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
+		_rectangleShape = _collisionShape.Shape as RectangleShape2D;
+		if (_rectangleShape == null)
+		{
+			GD.PrintErr("The shape is not a RectangleShape2D!");
+		}
+
+		setAnimation("stand");
+		updateHitbox();
+	}
+
 	public override void _Process(double delta)
 	{
 		processInput();
 
 		// if you fall in a hole
-		if(Position.Y > 10)
+		if (Position.Y > 10)
 		{
-			Position = new Vector2(40.0f, -40.0f);
+			Position = new Vector2(48.0f, -64.0f);
 		}
 	}
 	public override void _PhysicsProcess(double delta)
 	{
-		processJump(delta);
 		processWalk(delta);
+		processJump(delta);
 
+		if (hitboxNeedsUpdate)
+		{
+			updateHitbox();
+		}
+
+		updateAnimation();
 		MoveAndSlide();
 	}
 
@@ -85,7 +110,7 @@ public partial class Player : CharacterBody2D
 
 		if (isCrouching != wasCrouching)
 		{
-			// TODO update sprite
+			hitboxNeedsUpdate = true;
 		}
 	}
 
@@ -226,13 +251,99 @@ public partial class Player : CharacterBody2D
 		speedScale = Mathf.Abs(Velocity.X) / MAX_SPEED;
 	}
 
+	private void setAnimation(string animationName)
+	{
+		switch (curState)
+		{
+			case PowerState.SMALL:
+				animationName += "_small";
+				break;
+			case PowerState.BIG:
+				animationName += "_big";
+				break;
+			case PowerState.FIRE:
+				animationName += "_fire";
+				break;
+			default:
+				animationName = "stand_small";
+				break;
+		}
+		// GD.Print("Setting animation to: " + (isFacingLeft ? "mirrored " : "") + animationName);
+		_animatedSprite.SpeedScale = Mathf.Lerp(1, 2.5f, Velocity.Length() / MAX_SPEED);
+		_animatedSprite.FlipH = isFacingLeft;
+		_animatedSprite.Play(animationName);
+	}
+
+	private void updateAnimation()
+	{
+			
+		if (hasPoweredUp)
+		{
+			setAnimation("power_up");
+			hasPoweredUp = false;
+		}
+		else if (isFalling)
+		{
+			// freeze animation
+			_animatedSprite.Pause();
+		}
+		else if (isCrouching)
+		{
+			setAnimation("crouch");
+		}
+		else if (isJumping)
+		{
+			setAnimation("jump");
+		}
+		else if (isSkidding)
+		{
+			setAnimation("turn");
+		}
+		else if (Velocity.X != 0) // if moving horizontally
+		{
+			setAnimation("walk");
+		}
+		else
+		{
+			setAnimation("stand");
+		}
+	}
+
+	private void updateHitbox()
+	{
+		switch (curState)
+		{
+			case PowerState.SMALL:
+				_rectangleShape.Size = new Vector2(10, 12);
+				_collisionShape.Position = new Vector2(8, 26);
+				break;
+			case PowerState.BIG:
+			case PowerState.FIRE:
+				GD.Print("updating hitbox");
+
+				if (!isCrouching)
+				{
+					_rectangleShape.Size = new Vector2(12, 24);
+					_collisionShape.Position = new Vector2(8, 20);
+				}
+				else
+				{
+					_rectangleShape.Size = new Vector2(12, 12);
+					_collisionShape.Position = new Vector2(8, 26);
+				}
+				break;
+		}
+
+		hitboxNeedsUpdate = false;
+	}
+
 	public void PowerUpTo(PowerState aState)
 	{
 		if (aState > curState)
 		{
 			curState = aState;
-			GD.Print(curState);
+			hasPoweredUp = true;
 		}
-		// TODO transition sprite
+		hitboxNeedsUpdate = true;
 	}
 }
