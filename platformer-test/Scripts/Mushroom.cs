@@ -8,13 +8,12 @@ public partial class Mushroom : Powerup
 
 	public override void _Ready()
 	{
-		GD.Print("test");
 		powerUpLevel = PowerState.BIG;
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		processCollision();
+		// processCollision();
 		
 		Vector2 velocity = Velocity;
 
@@ -39,4 +38,6 @@ public partial class Mushroom : Powerup
 		Velocity = velocity;
 		MoveAndSlide();
 	}
+
+	
 }
