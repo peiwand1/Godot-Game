@@ -61,35 +61,35 @@ public partial class Player : CharacterBody2D
 			GD.PrintErr("The shape is not a RectangleShape2D!");
 		}
 
-		setAnimation("stand");
-		updateHitbox();
+		SetAnimation("stand");
+		UpdateHitbox();
 	}
 
 	public override void _Process(double delta)
 	{
-		processInput();
-
+		ProcessInput();
 		// if you fall in a hole
 		if (Position.Y > 10)
 		{
-			Position = new Vector2(48.0f, -64.0f);
+			Die();
 		}
 	}
+
 	public override void _PhysicsProcess(double delta)
 	{
-		processWalk(delta);
-		processJump(delta);
+		ProcessWalk(delta);
+		ProcessJump(delta);
 
 		if (hitboxNeedsUpdate)
 		{
-			updateHitbox();
+			UpdateHitbox();
 		}
 
-		updateAnimation();
+		UpdateAnimation();
 		MoveAndSlide();
 	}
 
-	private void processInput()
+	private void ProcessInput()
 	{
 		inputAxis.X = Input.GetAxis("move_left", "move_right");
 		inputAxis.Y = Input.GetAxis("jump", "move_down");
@@ -114,7 +114,7 @@ public partial class Player : CharacterBody2D
 		}
 	}
 
-	private void processJump(double delta)
+	private void ProcessJump(double delta)
 	{
 		if (IsOnFloor())
 		{
@@ -172,7 +172,7 @@ public partial class Player : CharacterBody2D
 		}
 	}
 
-	private void processWalk(double delta)
+	private void ProcessWalk(double delta)
 	{
 		Vector2 vel = Velocity;
 		if (inputAxis.X != 0)
@@ -251,7 +251,7 @@ public partial class Player : CharacterBody2D
 		speedScale = Mathf.Abs(Velocity.X) / MAX_SPEED;
 	}
 
-	private void setAnimation(string animationName)
+	private void SetAnimation(string animationName)
 	{
 		switch (curState)
 		{
@@ -274,13 +274,12 @@ public partial class Player : CharacterBody2D
 		_animatedSprite.Play(animationName);
 	}
 
-	private void updateAnimation()
+	private void UpdateAnimation()
 	{
-			
 		if (hasPoweredUp)
 		{
 			// TODO Animation gets skipped because it gets overwritten after 1 frame, find fix
-			setAnimation("power_up");
+			SetAnimation("power_up");
 			hasPoweredUp = false;
 		}
 		else if (isFalling)
@@ -290,27 +289,27 @@ public partial class Player : CharacterBody2D
 		}
 		else if (isCrouching)
 		{
-			setAnimation("crouch");
+			SetAnimation("crouch");
 		}
 		else if (isJumping)
 		{
-			setAnimation("jump");
+			SetAnimation("jump");
 		}
 		else if (isSkidding)
 		{
-			setAnimation("turn");
+			SetAnimation("turn");
 		}
 		else if (Velocity.X != 0) // if moving horizontally
 		{
-			setAnimation("walk");
+			SetAnimation("walk");
 		}
 		else
 		{
-			setAnimation("stand");
+			SetAnimation("stand");
 		}
 	}
 
-	private void updateHitbox()
+	private void UpdateHitbox()
 	{
 		switch (curState)
 		{
@@ -351,5 +350,38 @@ public partial class Player : CharacterBody2D
 	public PowerState GetPowerState()
 	{
 		return curState;
+	}
+
+	public bool IsFalling()
+	{
+		return isFalling;
+	}
+
+	private void OnEnemyDetectorBodyEntered(Node2D body)
+	{
+		GD.Print("detector");
+
+		// if the collision is with a mob and collision is from above
+		if (body is Enemy mob && isFalling)
+		{
+			GD.Print("true");
+			Vector2 vel = Velocity;
+
+			// if so, we squash it and bounce
+			mob.StartDeath();
+			vel.Y = -STOMP_SPEED;
+			Velocity = vel;
+		}
+		else
+		{
+			GD.Print("false");
+			Die();
+		}
+	}
+
+	private void Die()
+	{
+		//TODO initiate death process (restart level, show lives screen, etc.)
+		Position = new Vector2(48.0f, -64.0f);
 	}
 }

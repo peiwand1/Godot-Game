@@ -235,14 +235,24 @@ size = Vector2(10, 12)
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
-collision_mask = 5
 script = ExtResource("1_5nyen")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_iebms")
-animation = &"power_up_small"
+animation = &"stand_small"
 centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(8, 26)
 shape = SubResource("RectangleShape2D_5jtsc")
+
+[node name="EnemyDetectorArea2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetectorArea2D"]
+position = Vector2(8, 26)
+shape = SubResource("RectangleShape2D_5jtsc")
+
+[connection signal="body_entered" from="EnemyDetectorArea2D" to="." method="OnEnemyDetectorBodyEntered"]

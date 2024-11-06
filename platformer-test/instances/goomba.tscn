@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://bff15f7lw4a6t"]
+
+[ext_resource type="Script" path="res://Scripts/Goomba.cs" id="1_uj1fa"]
+[ext_resource type="Texture2D" uid="uid://dbjapw12wnb2g" path="res://Assets/enemies/goomba.png" id="2_p6bwn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_17isl"]
+atlas = ExtResource("2_p6bwn")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ijhyt"]
+atlas = ExtResource("2_p6bwn")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eslmb"]
+atlas = ExtResource("2_p6bwn")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nng6y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_17isl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ijhyt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eslmb")
+}],
+"loop": true,
+"name": &"die",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6bvci"]
+size = Vector2(12, 10)
+
+[node name="Goomba" type="CharacterBody2D"]
+collision_layer = 4
+script = ExtResource("1_uj1fa")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_nng6y")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_6bvci")
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+rect = Rect2(-8, -8, 16, 16)
+
+[connection signal="timeout" from="DeathTimer" to="." method="OnDeathTimerTimeout"]

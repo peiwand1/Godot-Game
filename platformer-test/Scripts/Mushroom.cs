@@ -27,7 +27,6 @@ public partial class Mushroom : PowerUp
 			direction = !direction;
 		}
 
-		// TODO reverse direction if hitting wall
 		if (direction)
 		{
 			velocity.X = Speed;
