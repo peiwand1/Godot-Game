@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Powerup : CharacterBody2D
+public partial class PowerUp : CharacterBody2D
 {
 	protected PowerState powerUpLevel = PowerState.SMALL;
 

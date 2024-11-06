@@ -1,10 +1,11 @@
 using Godot;
 using System;
 
-public partial class Mushroom : Powerup
+public partial class Mushroom : PowerUp
 {
 	public const float Speed = 50.0f;
 	public const float JumpVelocity = -400.0f;
+	private bool direction = false;
 
 	public override void _Ready()
 	{
@@ -12,9 +13,7 @@ public partial class Mushroom : Powerup
 	}
 
 	public override void _PhysicsProcess(double delta)
-	{
-		// processCollision();
-		
+	{		
 		Vector2 velocity = Velocity;
 
 		// Add the gravity.
@@ -23,8 +22,13 @@ public partial class Mushroom : Powerup
 			velocity += GetGravity() * (float)delta;
 		}
 
+		if (velocity.X == 0)
+		{
+			direction = !direction;
+		}
+
 		// TODO reverse direction if hitting wall
-		if (true)
+		if (direction)
 		{
 			velocity.X = Speed;
 		}

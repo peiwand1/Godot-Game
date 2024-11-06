@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gy83eh1pieij"
-path="res://.godot/imported/mushroom.png-c1c9546ab690f07df0833a24cb111269.ctex"
+uid="uid://csn0cpwees02u"
+path="res://.godot/imported/brick.png-4689a999c1a2e98acf2937ae3cbb60a6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/mushroom.png"
-dest_files=["res://.godot/imported/mushroom.png-c1c9546ab690f07df0833a24cb111269.ctex"]
+source_file="res://Assets/blocks/brick.png"
+dest_files=["res://.godot/imported/brick.png-4689a999c1a2e98acf2937ae3cbb60a6.ctex"]
 
 [params]
 

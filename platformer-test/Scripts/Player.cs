@@ -347,4 +347,9 @@ public partial class Player : CharacterBody2D
 		}
 		hitboxNeedsUpdate = true;
 	}
+
+	public PowerState GetPowerState()
+	{
+		return curState;
+	}
 }
