@@ -58,13 +58,14 @@ public partial class Goomba : Enemy
 	public override void OnHit()
 	{
 		_deathTimer.Start();
-		_collisionShape.Disabled = true;
+		_collisionShape.CallDeferred("set_disabled", true);
 		_animatedSprite.Play("die");
 		Alive = false;
 	}
 
 	protected override void OnDeathTimerTimeout()
 	{
+		ScoreManager.Instance.AddScore(100); 
 		QueueFree();
 	}
 }

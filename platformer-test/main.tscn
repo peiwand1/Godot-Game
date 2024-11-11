@@ -827,14 +827,12 @@ position = Vector2(2808, -40)
 [node name="Goomba8" parent="Enemies" instance=ExtResource("7_lo6yd")]
 position = Vector2(1576, -40)
 
+[node name="Turtle" parent="Enemies" instance=ExtResource("8_flhjs")]
+position = Vector2(1736, -40)
+
 [node name="Player" parent="." instance=ExtResource("2_igb21")]
 position = Vector2(48, -64)
 
 [node name="Camera" parent="Player" instance=ExtResource("3_0jm10")]
 
-[node name="Turtle" parent="." instance=ExtResource("8_flhjs")]
-position = Vector2(184, -40)
-
 [node name="HUD" parent="." instance=ExtResource("8_cdi2w")]
-offset_top = -240.0
-offset_bottom = -240.0

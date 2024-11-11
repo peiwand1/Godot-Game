@@ -11,6 +11,7 @@ public partial class PowerUp : CharacterBody2D
 		if (body is Player player)
 		{
 			player.PowerUpTo(powerUpLevel);
+			ScoreManager.Instance.AddScore(100);
 			QueueFree();  // Remove the collectible after collection
 		}
 	}

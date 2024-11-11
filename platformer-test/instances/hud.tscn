@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://djmfrpu10jjel"]
+
+[ext_resource type="Script" path="res://Scripts/Hud.cs" id="1_4jeyu"]
+
+[node name="HUD" type="CanvasLayer" node_paths=PackedStringArray("_scoreLabel")]
+script = ExtResource("1_4jeyu")
+_scoreLabel = NodePath("Control/ScoreLabel")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ScoreLabel" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 48.0
+offset_bottom = 23.0
+text = "0"
