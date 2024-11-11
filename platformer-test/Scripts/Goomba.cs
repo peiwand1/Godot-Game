@@ -4,20 +4,22 @@ using System;
 public partial class Goomba : Enemy
 {
 	public const float Speed = 30.0f;
-	public const float JumpVelocity = -400.0f;
-	private bool direction = true;
-	private bool alive = true;
+	private bool Direction = true;
+	private bool Alive = true;
+	protected Timer _deathTimer;
 	private AnimatedSprite2D _animatedSprite;
+	private CollisionShape2D _collisionShape;
 
 	public override void _Ready()
 	{
-		base._Ready();
+		_deathTimer = GetNode<Timer>("DeathTimer");
 		_animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		_collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (alive)
+		if (Alive)
 		{
 			ProcessWalk(delta);
 		}
@@ -37,10 +39,10 @@ public partial class Goomba : Enemy
 		// reverse when hitting wall
 		if (velocity.X == 0)
 		{
-			direction = !direction;
+			Direction = !Direction;
 		}
 
-		if (direction)
+		if (Direction)
 		{
 			velocity.X = Speed;
 		}
@@ -53,10 +55,16 @@ public partial class Goomba : Enemy
 		MoveAndSlide();
 	}
 
-	public override void StartDeath()
+	public override void OnHit()
 	{
-		base.StartDeath();
+		_deathTimer.Start();
+		_collisionShape.Disabled = true;
 		_animatedSprite.Play("die");
-		alive = false;
+		Alive = false;
+	}
+
+	protected override void OnDeathTimerTimeout()
+	{
+		QueueFree();
 	}
 }

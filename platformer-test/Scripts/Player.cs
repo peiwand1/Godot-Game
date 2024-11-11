@@ -368,7 +368,7 @@ public partial class Player : CharacterBody2D
 			Vector2 vel = Velocity;
 
 			// if so, we squash it and bounce
-			mob.StartDeath();
+			mob.OnHit();
 			vel.Y = -STOMP_SPEED;
 			Velocity = vel;
 		}

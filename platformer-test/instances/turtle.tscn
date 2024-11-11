@@ -1,0 +1,88 @@
+[gd_scene load_steps=10 format=3 uid="uid://dy4d1fb06r5qh"]
+
+[ext_resource type="Script" path="res://Scripts/Turtle.cs" id="1_gwh8u"]
+[ext_resource type="Texture2D" uid="uid://d3fv4cx8b8rw6" path="res://Assets/enemies/turtle.png" id="2_shwxs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_efl82"]
+atlas = ExtResource("2_shwxs")
+region = Rect2(0, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_51tdr"]
+atlas = ExtResource("2_shwxs")
+region = Rect2(18, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hklt0"]
+atlas = ExtResource("2_shwxs")
+region = Rect2(72, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qjesb"]
+atlas = ExtResource("2_shwxs")
+region = Rect2(72, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cch1e"]
+atlas = ExtResource("2_shwxs")
+region = Rect2(90, 0, 16, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nng6y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_efl82")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_51tdr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hklt0")
+}],
+"loop": true,
+"name": &"die",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qjesb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cch1e")
+}],
+"loop": true,
+"name": &"waking",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6bvci"]
+size = Vector2(12, 12)
+
+[node name="Goomba" type="CharacterBody2D"]
+collision_layer = 4
+script = ExtResource("1_gwh8u")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -4)
+sprite_frames = SubResource("SpriteFrames_nng6y")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_6bvci")
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="WakeupTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+position = Vector2(0, -8)
+rect = Rect2(-8, -8, 16, 24)
+
+[connection signal="timeout" from="DeathTimer" to="." method="OnDeathTimerTimeout"]
+[connection signal="timeout" from="WakeupTimer" to="." method="OnWakeupTimerTimeout"]
