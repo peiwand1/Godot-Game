@@ -3,8 +3,8 @@ using System;
 
 public partial class Camera : Camera2D
 {
-	Vector2 boundsOrigin;
-	Vector2 boundsSize;
+	private Vector2 _boundsOrigin;
+	private Vector2 _boundsSize;
 
 	public override void _Ready()
 	{
@@ -14,12 +14,12 @@ public partial class Camera : Camera2D
 	{
 	}
 
-	public void setBounds(CollisionShape2D bounds)
+	public void SetBounds(CollisionShape2D bounds)
 	{
-		boundsOrigin = bounds.GlobalPosition;
+		_boundsOrigin = bounds.GlobalPosition;
 		if (bounds.Shape is RectangleShape2D rectangleShape)
 		{
-			boundsSize = rectangleShape.Size * 2;
+			_boundsSize = rectangleShape.Size * 2;
 		}
 		else
 		{
@@ -27,9 +27,9 @@ public partial class Camera : Camera2D
 			return;
 		}
 
-		LimitLeft = (int)(boundsOrigin.X - boundsSize.X / 2);
-		LimitRight = (int)(boundsOrigin.X + boundsSize.X / 2);
-		LimitTop = (int)(boundsOrigin.Y - boundsSize.Y / 2);
-		LimitBottom = (int)(boundsOrigin.Y + boundsSize.Y / 2);
+		LimitLeft = (int)(_boundsOrigin.X - _boundsSize.X / 2);
+		LimitRight = (int)(_boundsOrigin.X + _boundsSize.X / 2);
+		LimitTop = (int)(_boundsOrigin.Y - _boundsSize.Y / 2);
+		LimitBottom = (int)(_boundsOrigin.Y + _boundsSize.Y / 2);
 	}
 }

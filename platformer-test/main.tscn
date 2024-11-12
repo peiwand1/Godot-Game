@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=4 uid="uid://cg8450gad4vjo"]
+[gd_scene load_steps=13 format=4 uid="uid://cg8450gad4vjo"]
 
 [ext_resource type="Texture2D" uid="uid://bbxtd87egok4x" path="res://Assets/NES - Super Mario Bros - Tileset.png" id="1_ares2"]
 [ext_resource type="PackedScene" uid="uid://2crpqfe6cumg" path="res://instances/player.tscn" id="2_igb21"]
 [ext_resource type="PackedScene" uid="uid://cpg4coh1h5pu0" path="res://instances/camera.tscn" id="3_0jm10"]
+[ext_resource type="PackedScene" uid="uid://c0qo7vx7uo0yv" path="res://instances/mushroom.tscn" id="3_53dld"]
 [ext_resource type="PackedScene" uid="uid://db35skg0cne18" path="res://instances/coin_auto.tscn" id="4_d66ob"]
 [ext_resource type="PackedScene" uid="uid://muc6ht8jrmku" path="res://instances/question_block.tscn" id="5_k5qj3"]
 [ext_resource type="PackedScene" uid="uid://qnsfbbt6qrf1" path="res://instances/brick.tscn" id="6_jpts3"]
@@ -639,21 +640,20 @@ metadata/_edit_lock_ = true
 
 [node name="QuestionBlock" parent="Blocks" instance=ExtResource("5_k5qj3")]
 position = Vector2(360, -152)
-itemScene = ExtResource("4_d66ob")
 
 [node name="QuestionBlock5" parent="Blocks" instance=ExtResource("5_k5qj3")]
 position = Vector2(344, -88)
+_itemScene = ExtResource("3_53dld")
 
 [node name="QuestionBlock2" parent="Blocks" instance=ExtResource("5_k5qj3")]
 position = Vector2(264, -88)
-itemScene = ExtResource("4_d66ob")
 
 [node name="QuestionBlock3" parent="Blocks" instance=ExtResource("5_k5qj3")]
 position = Vector2(376, -88)
-itemScene = ExtResource("4_d66ob")
 
 [node name="QuestionBlock4" parent="Blocks" instance=ExtResource("5_k5qj3")]
 position = Vector2(1272, -88)
+_itemScene = ExtResource("3_53dld")
 
 [node name="Brick" parent="Blocks" instance=ExtResource("6_jpts3")]
 position = Vector2(328, -88)
@@ -744,38 +744,32 @@ position = Vector2(2760, -88)
 
 [node name="Brick30" parent="Blocks" instance=ExtResource("6_jpts3")]
 position = Vector2(1528, -88)
-itemScene = ExtResource("4_d66ob")
+_itemScene = ExtResource("4_d66ob")
 
 [node name="QuestionBlock6" parent="Blocks" instance=ExtResource("5_k5qj3")]
 position = Vector2(1528, -152)
-itemScene = ExtResource("4_d66ob")
 
 [node name="QuestionBlock7" parent="Blocks" instance=ExtResource("5_k5qj3")]
 position = Vector2(1720, -88)
-itemScene = ExtResource("4_d66ob")
 
 [node name="QuestionBlock8" parent="Blocks" instance=ExtResource("5_k5qj3")]
 position = Vector2(1768, -88)
-itemScene = ExtResource("4_d66ob")
 
 [node name="QuestionBlock9" parent="Blocks" instance=ExtResource("5_k5qj3")]
 position = Vector2(1816, -88)
-itemScene = ExtResource("4_d66ob")
 
 [node name="QuestionBlock10" parent="Blocks" instance=ExtResource("5_k5qj3")]
 position = Vector2(2088, -152)
-itemScene = ExtResource("4_d66ob")
 
 [node name="QuestionBlock11" parent="Blocks" instance=ExtResource("5_k5qj3")]
 position = Vector2(2104, -152)
-itemScene = ExtResource("4_d66ob")
 
 [node name="QuestionBlock12" parent="Blocks" instance=ExtResource("5_k5qj3")]
 position = Vector2(2744, -88)
-itemScene = ExtResource("4_d66ob")
 
 [node name="QuestionBlock13" parent="Blocks" instance=ExtResource("5_k5qj3")]
 position = Vector2(1768, -152)
+_itemScene = ExtResource("3_53dld")
 
 [node name="Enemies" type="Node" parent="."]
 

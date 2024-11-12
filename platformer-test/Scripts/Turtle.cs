@@ -5,9 +5,9 @@ public partial class Turtle : Enemy
 {
 	public const float Speed = 20.0f;
 	public const float ShellSpeed = 120.0f;
-	private bool Direction = true;
-	private bool Awake = true;
-	private bool ShellHit = false;
+	private bool _direction = true;
+	private bool _awake = true;
+	private bool _shellHit = false;
 	protected Timer _knockoutTimer;
 	protected Timer _wakeupTimer;
 	private AnimatedSprite2D _animatedSprite;
@@ -22,7 +22,7 @@ public partial class Turtle : Enemy
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (Awake || ShellHit)
+		if (_awake || _shellHit)
 		{
 			ProcessWalk(delta);
 		}
@@ -32,7 +32,7 @@ public partial class Turtle : Enemy
 	public void ProcessWalk(double delta)
 	{
 		Vector2 velocity = Velocity;
-		float curSpeed = (ShellHit ? ShellSpeed : Speed);
+		float curSpeed = (_shellHit ? ShellSpeed : Speed);
 
 		// gravity
 		if (!IsOnFloor())
@@ -43,10 +43,10 @@ public partial class Turtle : Enemy
 		// reverse when hitting wall
 		if (velocity.X == 0)
 		{
-			Direction = !Direction;
+			_direction = !_direction;
 		}
 
-		if (Direction)
+		if (_direction)
 		{
 			velocity.X = curSpeed;
 		}
@@ -61,23 +61,23 @@ public partial class Turtle : Enemy
 
 	public override void OnHit()
 	{
-		if (Awake){
+		if (_awake){
 			_knockoutTimer.Start();
 			_animatedSprite.Play("die");
-			Awake = false;
+			_awake = false;
 		}
 		else
 		{
 			// starting and stopping the shell
-			if (ShellHit)
+			if (_shellHit)
 			{
-				ShellHit = false;
+				_shellHit = false;
 				_knockoutTimer.Start();
 				_animatedSprite.Play("die");
 			}
 			else
 			{
-				ShellHit = true;
+				_shellHit = true;
 				_knockoutTimer.Stop();
 				_wakeupTimer.Stop();
 				_animatedSprite.Play("die");
@@ -93,7 +93,7 @@ public partial class Turtle : Enemy
 
 	protected void OnWakeupTimerTimeout()
 	{
-		Awake = true;
+		_awake = true;
 		_animatedSprite.Play("default");
 	}
 }

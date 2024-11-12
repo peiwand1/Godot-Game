@@ -6,7 +6,7 @@ public partial class GameManager : Node
 
 	private int _score = 0;
 	private int _coins = 0;
-	private int _timeLeft = 10;
+	private int _timeLeft = 400;
 	private double _timeBetweenUpdates = 0.4; // 0.4 seconds per in game time unit
 	private double _timeSinceUpdate = 0;
 
@@ -53,7 +53,7 @@ public partial class GameManager : Node
 
 	private void ResetLevel()
 	{
-		_timeLeft = 15;
+		_timeLeft = 400;
 		_timeBetweenUpdates = 0.4; // 0.4 seconds per in game time unit
 		_timeSinceUpdate = 0;
 

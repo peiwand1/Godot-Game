@@ -3,7 +3,7 @@ using System;
 
 public partial class QuestionBlock : Node2D
 {
-	[Export] private PackedScene itemScene; // The item to spawn, e.g., a coin
+	[Export] public PackedScene _itemScene; // The item to spawn, e.g., a coin
 
 	public void OnArea2DBodyEntered(Node2D node)
 	{
@@ -27,9 +27,9 @@ public partial class QuestionBlock : Node2D
 		tween.TweenProperty(this, "position:y", originalPosition.Y, 0.1f).SetTrans(Tween.TransitionType.Quad).SetDelay(0.1f);
 
 		// Spawn the item above the block
-		if (itemScene != null)
+		if (_itemScene != null)
 		{
-			Node2D item = (Node2D)itemScene.Instantiate();
+			Node2D item = (Node2D)_itemScene.Instantiate();
 			item.Position = Position + new Vector2(0, -16); // Adjust to spawn above the block
 			GetParent().AddChild(item);
 		}

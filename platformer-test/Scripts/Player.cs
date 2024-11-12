@@ -3,54 +3,55 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
-	const float MIN_SPEED = 4.453125f;
-	const float MAX_SPEED = 153.75f;
-	const float MAX_WALK_SPEED = 93.75f;
-	const float MAX_FALL_SPEED = 270.0f;
-	const float MAX_FALL_SPEED_CAP = 240.0f;
-	const float MIN_SLOW_DOWN_SPEED = 33.75f;
+	private const float MIN_SPEED = 4.453125f;
+	private const float MAX_SPEED = 153.75f;
+	private const float MAX_WALK_SPEED = 93.75f;
+	private const float MAX_FALL_SPEED = 270.0f;
+	private const float MAX_FALL_SPEED_CAP = 240.0f;
+	private const float MIN_SLOW_DOWN_SPEED = 33.75f;
 
-	const float WALK_ACCELERATION = 133.59375f;
-	const float RUN_ACCELERATION = 200.390625f;
-	const float WALK_FRICTION = 182.8125f;
-	const float SKID_FRICTION = 365.625f;
+	private const float WALK_ACCELERATION = 133.59375f;
+	private const float RUN_ACCELERATION = 200.390625f;
+	private const float WALK_FRICTION = 182.8125f;
+	private const float SKID_FRICTION = 365.625f;
 
 	// Jump physics vary based on horizontal speed thresholds;
-	readonly float[] JUMP_SPEED = { -240.0f, -240.0f, -300.0f };
-	readonly float[] LONG_JUMP_GRAVITY = { 450.0f, 421.875f, 562.5f };
-	readonly float[] GRAVITY = { 1575.0f, 1350.0f, 2025.0f };
+	private readonly float[] JUMP_SPEED = { -240.0f, -240.0f, -300.0f };
+	private readonly float[] LONG_JUMP_GRAVITY = { 450.0f, 421.875f, 562.5f };
+	private readonly float[] GRAVITY = { 1575.0f, 1350.0f, 2025.0f };
 
-	readonly float[] SPEED_THRESHOLDS = { 60.0f, 138.75f };
+	private readonly float[] SPEED_THRESHOLDS = { 60.0f, 138.75f };
 
-	const float STOMP_SPEED = 240.0f;
-	const float STOMP_SPEED_CAP = -60.0f;
+	private const float STOMP_SPEED = 240.0f;
+	private const float STOMP_SPEED_CAP = -60.0f;
 
-	const float COOLDOWN_TIME_SEC = 3.0f;
+	private const float COOLDOWN_TIME_SEC = 3.0f;
 
 	///////////////////////////////////////////////////////////
-	Vector2 inputAxis = Vector2.Zero;
-	float speedScale = 0.0f;
+	private Vector2 inputAxis = Vector2.Zero;
+	private float speedScale = 0.0f;
+	
+	private bool isFacingLeft = false;
+	private bool isRunning = false;
+	private bool isJumping = false;
+	private bool isFalling = false;
+	private bool isCrouching = false;
+	private bool isSkidding = false;
+	private bool hitboxNeedsUpdate = false;
+	private bool hasPoweredUp = false;
 
-	bool isFacingLeft = false;
-	bool isRunning = false;
-	bool isJumping = false;
-	bool isFalling = false;
-	bool isCrouching = false;
-	bool isSkidding = false;
-	bool hitboxNeedsUpdate = false;
-	bool hasPoweredUp = false;
+	private float minSpeed = MIN_SPEED;
+	private float maxSpeed = MAX_WALK_SPEED;
+	private float acceleration = WALK_ACCELERATION;
 
-	float minSpeed = MIN_SPEED;
-	float maxSpeed = MAX_WALK_SPEED;
-	float acceleration = WALK_ACCELERATION;
+	private int speedThreshold = 0;
 
-	int speedThreshold = 0;
-
-	PowerState curState = PowerState.SMALL;
+	private PowerState _curState = PowerState.SMALL;
 
 	private AnimatedSprite2D _animatedSprite;
 	private CollisionShape2D _collisionShape;
 	private RectangleShape2D _rectangleShape;
+
 	public override void _Ready()
 	{
 		_animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
@@ -253,7 +254,7 @@ public partial class Player : CharacterBody2D
 
 	private void SetAnimation(string animationName)
 	{
-		switch (curState)
+		switch (_curState)
 		{
 			case PowerState.SMALL:
 				animationName += "_small";
@@ -311,7 +312,7 @@ public partial class Player : CharacterBody2D
 
 	private void UpdateHitbox()
 	{
-		switch (curState)
+		switch (_curState)
 		{
 			case PowerState.SMALL:
 				_rectangleShape.Size = new Vector2(10, 12);
@@ -337,9 +338,9 @@ public partial class Player : CharacterBody2D
 
 	public void PowerUpTo(PowerState aState)
 	{
-		if (aState > curState)
+		if (aState > _curState)
 		{
-			curState = aState;
+			_curState = aState;
 			hasPoweredUp = true;
 		}
 		hitboxNeedsUpdate = true;
@@ -347,7 +348,7 @@ public partial class Player : CharacterBody2D
 
 	public PowerState GetPowerState()
 	{
-		return curState;
+		return _curState;
 	}
 
 	public bool IsFalling()

@@ -3,7 +3,7 @@ using System;
 
 public partial class Brick : Node2D
 {
-	[Export] private PackedScene itemScene; // The item to spawn, e.g., a coin
+	[Export] public PackedScene _itemScene; // The item to spawn when hit
 
 	public void OnArea2DBodyEntered(Node2D node)
 	{
@@ -23,7 +23,7 @@ public partial class Brick : Node2D
 
 	private void BounceBlock()
 	{
-		// Play bounce animation for block if player is small
+		// Play bounce animation for block if player is small (can't break the block)
 		Vector2 originalPosition = Position;
 		Tween tween = GetTree().CreateTween();
 		tween.TweenProperty(this, "position:y", Position.Y - 8, 0.1f).SetTrans(Tween.TransitionType.Quad);
@@ -32,10 +32,10 @@ public partial class Brick : Node2D
 
 	private void BreakBlock()
 	{
-		// Spawn the item above the block
-		if (itemScene != null)
+		// Spawn the held item above the block if it has one
+		if (_itemScene != null)
 		{
-			Node2D item = (Node2D)itemScene.Instantiate();
+			Node2D item = (Node2D)_itemScene.Instantiate();
 			item.Position = Position + new Vector2(0, -16); // Adjust to spawn above the block
 			GetParent().AddChild(item);
 		}

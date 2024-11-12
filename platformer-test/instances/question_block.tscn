@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/QuestionBlock.cs" id="1_hdwv6"]
 [ext_resource type="Texture2D" uid="uid://dnirs453l3e4f" path="res://Assets/blocks/q_block.png" id="1_nj5na"]
-[ext_resource type="PackedScene" uid="uid://c0qo7vx7uo0yv" path="res://instances/mushroom.tscn" id="2_182tq"]
+[ext_resource type="PackedScene" uid="uid://db35skg0cne18" path="res://instances/coin_auto.tscn" id="2_qa25p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vdbt2"]
 atlas = ExtResource("1_nj5na")
@@ -53,7 +53,7 @@ size = Vector2(16, 2)
 
 [node name="QuestionBlock" type="Node2D"]
 script = ExtResource("1_hdwv6")
-itemScene = ExtResource("2_182tq")
+_itemScene = ExtResource("2_qa25p")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_dhj1a")

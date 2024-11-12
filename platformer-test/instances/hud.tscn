@@ -8,11 +8,11 @@
 default_font = ExtResource("2_qrr3b")
 default_font_size = 8
 
-[node name="HUD" type="CanvasLayer" node_paths=PackedStringArray("_scoreLabel", "_coinLabel", "_timerLabel")]
+[node name="HUD" type="CanvasLayer" node_paths=PackedStringArray("ScoreLabel", "CoinLabel", "TimerLabel")]
 script = ExtResource("1_4jeyu")
-_scoreLabel = NodePath("Control/ScoreLabel")
-_coinLabel = NodePath("Control/CoinLabel")
-_timerLabel = NodePath("Control/TimerLabel")
+ScoreLabel = NodePath("Control/ScoreLabel")
+CoinLabel = NodePath("Control/CoinLabel")
+TimerLabel = NodePath("Control/TimerLabel")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3

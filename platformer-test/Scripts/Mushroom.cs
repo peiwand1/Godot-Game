@@ -5,11 +5,11 @@ public partial class Mushroom : PowerUp
 {
 	public const float Speed = 50.0f;
 	public const float JumpVelocity = -400.0f;
-	private bool direction = false;
+	private bool _direction = false;
 
 	public override void _Ready()
 	{
-		powerUpLevel = PowerState.BIG;
+		_powerUpLevel = PowerState.BIG;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -24,10 +24,10 @@ public partial class Mushroom : PowerUp
 
 		if (velocity.X == 0)
 		{
-			direction = !direction;
+			_direction = !_direction;
 		}
 
-		if (direction)
+		if (_direction)
 		{
 			velocity.X = Speed;
 		}
@@ -41,6 +41,4 @@ public partial class Mushroom : PowerUp
 		Velocity = velocity;
 		MoveAndSlide();
 	}
-
-	
 }

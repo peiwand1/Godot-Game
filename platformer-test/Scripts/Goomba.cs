@@ -4,8 +4,8 @@ using System;
 public partial class Goomba : Enemy
 {
 	public const float Speed = 30.0f;
-	private bool Direction = true;
-	private bool Alive = true;
+	private bool _direction = true;
+	private bool _alive = true;
 	protected Timer _deathTimer;
 	private AnimatedSprite2D _animatedSprite;
 	private CollisionShape2D _collisionShape;
@@ -19,7 +19,7 @@ public partial class Goomba : Enemy
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (Alive)
+		if (_alive)
 		{
 			ProcessWalk(delta);
 		}
@@ -39,10 +39,10 @@ public partial class Goomba : Enemy
 		// reverse when hitting wall
 		if (velocity.X == 0)
 		{
-			Direction = !Direction;
+			_direction = !_direction;
 		}
 
-		if (Direction)
+		if (_direction)
 		{
 			velocity.X = Speed;
 		}
@@ -61,7 +61,7 @@ public partial class Goomba : Enemy
 		_deathTimer.Start();
 		_collisionShape.CallDeferred("set_disabled", true);
 		_animatedSprite.Play("die");
-		Alive = false;
+		_alive = false;
 	}
 
 	protected override void OnDeathTimerTimeout()
