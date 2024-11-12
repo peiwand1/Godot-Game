@@ -1,10 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://djmfrpu10jjel"]
+[gd_scene load_steps=5 format=3 uid="uid://djmfrpu10jjel"]
 
 [ext_resource type="Script" path="res://Scripts/Hud.cs" id="1_4jeyu"]
+[ext_resource type="FontFile" uid="uid://jfakd125imk0" path="res://Assets/PressStart2P.ttf" id="2_qrr3b"]
+[ext_resource type="Texture2D" uid="uid://d21qph27wxepd" path="res://Assets/coin_counter.png" id="3_a0tay"]
 
-[node name="HUD" type="CanvasLayer" node_paths=PackedStringArray("_scoreLabel")]
+[sub_resource type="Theme" id="Theme_yplio"]
+default_font = ExtResource("2_qrr3b")
+default_font_size = 8
+
+[node name="HUD" type="CanvasLayer" node_paths=PackedStringArray("_scoreLabel", "_coinLabel", "_timerLabel")]
 script = ExtResource("1_4jeyu")
 _scoreLabel = NodePath("Control/ScoreLabel")
+_coinLabel = NodePath("Control/CoinLabel")
+_timerLabel = NodePath("Control/TimerLabel")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -13,9 +21,57 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="ScoreLabel" type="Label" parent="Control"]
+texture_filter = 1
 layout_mode = 0
-offset_left = 8.0
-offset_right = 48.0
-offset_bottom = 23.0
+offset_left = 24.0
+offset_top = 8.0
+offset_right = 72.0
+offset_bottom = 24.0
+theme = SubResource("Theme_yplio")
+theme_override_constants/line_spacing = 0
 text = "MARIO
 000000"
+
+[node name="LevelLabel" type="Label" parent="Control"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 144.0
+offset_top = 8.0
+offset_right = 184.0
+offset_bottom = 24.0
+theme = SubResource("Theme_yplio")
+theme_override_constants/line_spacing = 0
+text = "WORLD
+ 1-1"
+
+[node name="TimerLabel" type="Label" parent="Control"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 200.0
+offset_top = 8.0
+offset_right = 232.0
+offset_bottom = 24.0
+theme = SubResource("Theme_yplio")
+theme_override_constants/line_spacing = 0
+text = "TIME
+ 400"
+
+[node name="CoinLabel" type="Label" parent="Control"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 104.0
+offset_top = 16.0
+offset_right = 128.0
+offset_bottom = 24.0
+theme = SubResource("Theme_yplio")
+theme_override_constants/line_spacing = 0
+text = "00"
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 88.0
+offset_top = 16.0
+offset_right = 96.0
+offset_bottom = 24.0
+texture = ExtResource("3_a0tay")

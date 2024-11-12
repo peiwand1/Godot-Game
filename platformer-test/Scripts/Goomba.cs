@@ -57,7 +57,7 @@ public partial class Goomba : Enemy
 
 	public override void OnHit()
 	{
-		ScoreManager.Instance.AddScore(100);
+		GameManager.Instance.AddScore(100);
 		_deathTimer.Start();
 		_collisionShape.CallDeferred("set_disabled", true);
 		_animatedSprite.Play("die");

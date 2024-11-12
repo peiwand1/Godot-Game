@@ -40,7 +40,7 @@ public partial class Brick : Node2D
 			GetParent().AddChild(item);
 		}
 
-		ScoreManager.Instance.AddScore(50);
+		GameManager.Instance.AddScore(50);
 		QueueFree();
 	}
 }

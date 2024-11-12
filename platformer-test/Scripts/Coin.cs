@@ -13,7 +13,8 @@ public partial class Coin : Area2D
 	{
 		if (node is Player)
 		{
-			ScoreManager.Instance.AddScore(200);
+			GameManager.Instance.AddScore(200);
+			GameManager.Instance.AddCoin(1);
 			QueueFree();
 		}
 	}
