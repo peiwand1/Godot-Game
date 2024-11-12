@@ -319,8 +319,6 @@ public partial class Player : CharacterBody2D
 				break;
 			case PowerState.BIG:
 			case PowerState.FIRE:
-				GD.Print("updating hitbox");
-
 				if (!isCrouching)
 				{
 					_rectangleShape.Size = new Vector2(12, 24);
@@ -364,7 +362,6 @@ public partial class Player : CharacterBody2D
 		// if the collision is with a mob and collision is from above
 		if (body is Enemy mob && isFalling)
 		{
-			GD.Print("true");
 			Vector2 vel = Velocity;
 
 			// if so, we squash it and bounce
@@ -374,7 +371,6 @@ public partial class Player : CharacterBody2D
 		}
 		else
 		{
-			GD.Print("false");
 			Die();
 		}
 	}

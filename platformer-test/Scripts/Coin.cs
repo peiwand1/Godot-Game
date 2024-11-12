@@ -11,11 +11,9 @@ public partial class Coin : Area2D
 
 	public void OnArea2DBodyEntered(Node2D node)
 	{
-		GD.Print("OnArea2DBodyEntered");
 		if (node is Player)
 		{
-			//TODO collect coin
-
+			ScoreManager.Instance.AddScore(200);
 			QueueFree();
 		}
 	}

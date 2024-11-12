@@ -5,15 +5,8 @@ public partial class Brick : Node2D
 {
 	[Export] private PackedScene itemScene; // The item to spawn, e.g., a coin
 
-	public override void _Ready()
-	{
-		// Connect the Area2D signal to detect upward collisions
-		// GetNode<Area2D>("Area2D").BodyEntered += OnArea2DBodyEntered;
-	}
-
 	public void OnArea2DBodyEntered(Node2D node)
 	{
-		GD.Print("OnArea2DBodyEntered");
 		// Check if the body is the player and the block hasn't been activated
 		if (node is Player player)
 		{
@@ -47,6 +40,7 @@ public partial class Brick : Node2D
 			GetParent().AddChild(item);
 		}
 
+		ScoreManager.Instance.AddScore(50);
 		QueueFree();
 	}
 }

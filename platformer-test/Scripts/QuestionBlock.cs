@@ -4,22 +4,19 @@ using System;
 public partial class QuestionBlock : Node2D
 {
 	[Export] private PackedScene itemScene; // The item to spawn, e.g., a coin
-	private bool activated = false;
 
 	public void OnArea2DBodyEntered(Node2D node)
 	{
 		// Check if the body is the player and the block hasn't been activated
-		if (node is Player && !activated)
+		if (node is Player)
 		{
 			ActivateBlock();
-			GetNode<Area2D>("Area2D").Monitoring = false;
+			GetNode<Area2D>("Area2D").SetDeferred("monitoring", false);
 		}
 	}
 
 	private void ActivateBlock()
 	{
-		activated = true;
-
 		// Change block sprite or animation to an "empty" block
 		GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("empty");
 

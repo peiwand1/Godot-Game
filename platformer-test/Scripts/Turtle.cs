@@ -8,14 +8,14 @@ public partial class Turtle : Enemy
 	private bool Direction = true;
 	private bool Awake = true;
 	private bool ShellHit = false;
-	protected Timer _deathTimer;
+	protected Timer _knockoutTimer;
 	protected Timer _wakeupTimer;
 	private AnimatedSprite2D _animatedSprite;
 
 	public override void _Ready()
 	{
 		base._Ready();
-		_deathTimer = GetNode<Timer>("DeathTimer");
+		_knockoutTimer = GetNode<Timer>("KnockoutTimer");
 		_wakeupTimer = GetNode<Timer>("WakeupTimer");
 		_animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 	}
@@ -62,7 +62,7 @@ public partial class Turtle : Enemy
 	public override void OnHit()
 	{
 		if (Awake){
-			_deathTimer.Start();
+			_knockoutTimer.Start();
 			_animatedSprite.Play("die");
 			Awake = false;
 		}
@@ -72,13 +72,13 @@ public partial class Turtle : Enemy
 			if (ShellHit)
 			{
 				ShellHit = false;
-				_deathTimer.Start();
+				_knockoutTimer.Start();
 				_animatedSprite.Play("die");
 			}
 			else
 			{
 				ShellHit = true;
-				_deathTimer.Stop();
+				_knockoutTimer.Stop();
 				_wakeupTimer.Stop();
 				_animatedSprite.Play("die");
 			}

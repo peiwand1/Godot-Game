@@ -18,6 +18,6 @@ public partial class Hud : CanvasLayer
 
 	private void OnScoreUpdated(int newScore)
 	{
-		_scoreLabel.Text = $"{newScore}";
+		_scoreLabel.Text = "MARIO\n" + newScore.ToString("D6");
 	}
 }

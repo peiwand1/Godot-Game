@@ -59,7 +59,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6bvci"]
 size = Vector2(12, 12)
 
-[node name="Goomba" type="CharacterBody2D"]
+[node name="Turtle" type="CharacterBody2D"]
 collision_layer = 4
 script = ExtResource("1_gwh8u")
 
@@ -72,7 +72,7 @@ autoplay = "default"
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_6bvci")
 
-[node name="DeathTimer" type="Timer" parent="."]
+[node name="KnockoutTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
 
@@ -84,5 +84,5 @@ one_shot = true
 position = Vector2(0, -8)
 rect = Rect2(-8, -8, 16, 24)
 
-[connection signal="timeout" from="DeathTimer" to="." method="OnDeathTimerTimeout"]
+[connection signal="timeout" from="KnockoutTimer" to="." method="OnDeathTimerTimeout"]
 [connection signal="timeout" from="WakeupTimer" to="." method="OnWakeupTimerTimeout"]
